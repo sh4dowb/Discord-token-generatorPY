@@ -12,6 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 import json
 import random
 import imaplib
+import email as emaillib
 init(convert=True)
 folder=r"Data/Avatars"
 captchaApi = "anti-captcha.com" # 2captcha.com anti-captcha.com capmonster.cloud (use anti captcha, other services are patched)
@@ -111,12 +112,12 @@ def generateToken():
                             data = None
                             while not data or len(data[0].split()) == 0:
                                 _, data = imap.search(None, '(TO "{}")'.format(email))
-                                time.sleep(2)
+                                sleep(2)
                             
                             for num in data[0].split():
                                 _, data = imap.fetch(num, '(RFC822)')
                                 rawemail = data[0][1].decode("utf-8")
-                                emailData = str(email.message_from_string(rawemail).get_payload(0).get_payload(decode=True)).split('https://click.discord.com/ls/click?upn=')[1]
+                                emailData = str(emaillib.message_from_string(rawemail).get_payload(0).get_payload(decode=True)).split('https://click.discord.com/ls/click?upn=')[1]
 
                         else:
                             while len(emailData) == 0:
