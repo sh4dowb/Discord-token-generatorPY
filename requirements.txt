@@ -2,3 +2,5 @@ colorama
 futures
 httpx
 websocket-client
+imaplib
+email
